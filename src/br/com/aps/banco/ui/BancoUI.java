@@ -5,11 +5,15 @@
  */
 package br.com.aps.banco.ui;
 
+import br.com.aps.banco.Banco;
+
 /**
  *
  * @author ti
  */
 public class BancoUI extends javax.swing.JFrame {
+    
+    public static Banco banco = new Banco();
 
     /**
      * Creates new form BancoUI
@@ -77,6 +81,11 @@ public class BancoUI extends javax.swing.JFrame {
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Relatório");
+        jMenu2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu2MouseClicked(evt);
+            }
+        });
         jMenu2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenu2ActionPerformed(evt);
@@ -125,10 +134,14 @@ public class BancoUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenu2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu2ActionPerformed
+        
+    }//GEN-LAST:event_jMenu2ActionPerformed
+
+    private void jMenu2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu2MouseClicked
         GerarRelatorio gerarRelatorio = new GerarRelatorio();
         painelPrincipal.add(gerarRelatorio);
         gerarRelatorio.setVisible(true);
-    }//GEN-LAST:event_jMenu2ActionPerformed
+    }//GEN-LAST:event_jMenu2MouseClicked
 
     /**
      * @param args the command line arguments

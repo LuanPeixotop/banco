@@ -7,6 +7,11 @@ public abstract class ContaBancaria implements Imprimivel {
     public abstract void sacar (double valor);
     public abstract void depositar (double valor);
     
+    public ContaBancaria(long numeroConta, double saldo) {
+        this.numeroConta = numeroConta;
+        this.saldo = saldo;
+    }
+    
     public void transferir (double valor, ContaBancaria contaDe, ContaBancaria contaPara) {
         contaDe.sacar(valor);
         contaPara.depositar(valor);

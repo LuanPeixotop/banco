@@ -5,6 +5,9 @@
     <Component class="javax.swing.ButtonGroup" name="radioContas">
     </Component>
   </NonVisualComponents>
+  <Properties>
+    <Property name="closable" type="boolean" value="true"/>
+  </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
   </SyntheticProperties>
@@ -127,6 +130,7 @@
       <SubComponents>
         <Component class="javax.swing.JRadioButton" name="radioContaCorrente">
           <Properties>
+            <Property name="selected" type="boolean" value="true"/>
             <Property name="text" type="java.lang.String" value="Conta Corrente"/>
           </Properties>
           <Events>
@@ -144,7 +148,7 @@
         <Component class="javax.swing.JFormattedTextField" name="tfNumeroConta">
           <Properties>
             <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-              <Format subtype="1" type="0"/>
+              <Format format="#0" subtype="-1" type="0"/>
             </Property>
           </Properties>
         </Component>
@@ -161,7 +165,7 @@
         <Component class="javax.swing.JFormattedTextField" name="tfSaldo">
           <Properties>
             <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-              <Format format="#0.00" subtype="-1" type="0"/>
+              <Format format="#0" subtype="-1" type="0"/>
             </Property>
           </Properties>
         </Component>
@@ -173,7 +177,7 @@
         <Component class="javax.swing.JFormattedTextField" name="tfTaxaOuLimite">
           <Properties>
             <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-              <Format format="#0.00" subtype="-1" type="0"/>
+              <Format format="#0" subtype="-1" type="0"/>
             </Property>
           </Properties>
         </Component>
@@ -182,6 +186,7 @@
             <Property name="text" type="java.lang.String" value="Cadastrar"/>
           </Properties>
           <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnCadastrarMouseClicked"/>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCadastrarActionPerformed"/>
           </Events>
         </Component>

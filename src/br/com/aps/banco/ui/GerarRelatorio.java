@@ -39,6 +39,8 @@ public class GerarRelatorio extends javax.swing.JInternalFrame {
         btnVisualizarRelatorio = new javax.swing.JButton();
         tfRelatorio = new javax.swing.JTextField();
 
+        setClosable(true);
+
         jLabel1.setText("Todas as Contas?");
 
         radioSim.setText("Sim");

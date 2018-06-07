@@ -1,22 +1,37 @@
 package br.com.aps.banco;
 
+import Exceptions.ContaException;
+import Exceptions.MovimentacaoException;
+
 public class ContaPoupanca extends ContaBancaria implements Imprimivel {
     
     private double limite;
 
+    public ContaPoupanca(long numeroConta, double saldo, double limite) {
+        super(numeroConta, saldo);
+        this.limite = limite;
+    }
+
     @Override
     public void sacar(double valor) {
-        if (valor <= (this.getSaldo() + limite)) {
-            this.setSaldo(this.getSaldo() - valor);
-            System.out.println("Valor sacado com sucesso!");
+        if (valor > 0) {
+            if (valor <= (this.getSaldo() + limite)) {
+                this.setSaldo(this.getSaldo() - valor);
+            } else {
+                throw new MovimentacaoException("Saldo e limite Insuficientes");
+            }
         } else {
-            throw new IllegalArgumentException("Saldo e limite Insuficientes");
+            throw new MovimentacaoException("Valor Inválido!");
         }
     }
 
     @Override
     public void depositar(double valor) {
-        this.setSaldo(this.getSaldo() + valor);
+        if (valor > 0) {
+            this.setSaldo(this.getSaldo() + valor);
+        } else {
+            throw new ContaException("Valor Inválido");
+        }
     }
 
     @Override

@@ -1,22 +1,37 @@
 package br.com.aps.banco;
 
-public class ContaCorrente extends ContaBancaria implements Imprimivel{
+import Exceptions.ContaException;
+import Exceptions.MovimentacaoException;
+
+public class ContaCorrente extends ContaBancaria implements Imprimivel {
 
     private double taxaDeOperacao;
     
+    public ContaCorrente(long numeroConta, double saldo, double taxa) {
+        super(numeroConta, saldo);
+        this.taxaDeOperacao =  taxa;
+    }
+    
     @Override
     public void sacar(double valor) {
-        if (valor + taxaDeOperacao <= this.getSaldo()) {
-            this.setSaldo(this.getSaldo() - (valor + taxaDeOperacao));
-            System.out.println("Valor sacado com sucesso!");
+        if (valor > 0) {
+            if (valor + taxaDeOperacao <= this.getSaldo()) {
+                this.setSaldo(this.getSaldo() - (valor + taxaDeOperacao));
+            } else {
+                throw new MovimentacaoException("Saldo Insuficiente");
+            }
         } else {
-            throw new IllegalArgumentException("Saldo Insuficiente");
+            throw new MovimentacaoException("Valor inválido!");
         }
     }
 
     @Override
     public void depositar(double valor) {
-        this.setSaldo(this.getSaldo() + valor);
+        if (valor > 0) {
+            this.setSaldo(this.getSaldo() + valor);
+        } else {
+            throw new ContaException("Valor Inválido");
+        }
     }
 
     @Override

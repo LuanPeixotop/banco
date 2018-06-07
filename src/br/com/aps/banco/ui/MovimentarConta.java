@@ -5,12 +5,18 @@
  */
 package br.com.aps.banco.ui;
 
+import Exceptions.ContaException;
+import Exceptions.MovimentacaoException;
+import br.com.aps.banco.ContaBancaria;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author ti
  */
 public class MovimentarConta extends javax.swing.JInternalFrame {
-
+        ContaBancaria conta;
+        int radio = 0;
     /**
      * Creates new form MovimentarConta
      */
@@ -22,6 +28,7 @@ public class MovimentarConta extends javax.swing.JInternalFrame {
         btnConfirmar.setEnabled(false);
         lblNumeroContaDestino.setEnabled(false);
         tfNumeroContaDestino.setEnabled(false);
+        
     }
 
     /**
@@ -47,6 +54,8 @@ public class MovimentarConta extends javax.swing.JInternalFrame {
         tfNumeroContaDestino = new javax.swing.JFormattedTextField();
         btnConfirmar = new javax.swing.JButton();
         btnFechar = new javax.swing.JButton();
+
+        setClosable(true);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Operações com Contas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
 
@@ -84,13 +93,18 @@ public class MovimentarConta extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Informe o valor: ");
 
-        tfValor.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
+        tfValor.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
 
         lblNumeroContaDestino.setText("Número da Conta:");
 
         tfNumeroContaDestino.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
 
         btnConfirmar.setText("Confirmar");
+        btnConfirmar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConfirmarActionPerformed(evt);
+            }
+        });
 
         btnFechar.setText("Fechar");
         btnFechar.addActionListener(new java.awt.event.ActionListener() {
@@ -188,27 +202,74 @@ public class MovimentarConta extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharActionPerformed
-        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_btnFecharActionPerformed
 
     private void radioDepositarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioDepositarActionPerformed
        lblNumeroContaDestino.setEnabled(false);
        tfNumeroContaDestino.setEnabled(false);
+       radio = 1;
     }//GEN-LAST:event_radioDepositarActionPerformed
 
     private void radioSacarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioSacarActionPerformed
        lblNumeroContaDestino.setEnabled(false);
        tfNumeroContaDestino.setEnabled(false);
+       radio = 2;
     }//GEN-LAST:event_radioSacarActionPerformed
 
     private void radioTransferirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioTransferirActionPerformed
        lblNumeroContaDestino.setEnabled(true);
        tfNumeroContaDestino.setEnabled(true);
+       radio = 3;
     }//GEN-LAST:event_radioTransferirActionPerformed
 
     private void btnLocalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocalizarActionPerformed
-        btnConfirmar.setEnabled(true);  //Só deixa confirmar se tiver localizado a conta.
+        try {
+            conta = BancoUI.banco.procurarConta(Long.parseLong(tfNumeroConta.getText()));
+            if (conta != null) {
+                btnConfirmar.setEnabled(true);
+            } else {
+                JOptionPane.showMessageDialog(null, "Conta Não Encontrada!");
+            }
+            
+        } catch (NumberFormatException nfe) {
+            JOptionPane.showMessageDialog(null, "Preencha os campos corretamente!");;
+        } 
+        catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Ocorreu um erro: " + e.getMessage());
+        }
     }//GEN-LAST:event_btnLocalizarActionPerformed
+
+    private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
+        try {
+            if (radio == 1) {
+                conta.depositar(Double.parseDouble(tfValor.getText()));
+                JOptionPane.showMessageDialog(null, "Depositado com sucesso!");
+            } else if (radio == 2) {
+                conta.sacar(Double.parseDouble(tfValor.getText()));
+                JOptionPane.showMessageDialog(null, "Sacado com sucesso!");
+            } else {
+                ContaBancaria contaPara = BancoUI.banco.procurarConta(Long.parseLong(tfNumeroContaDestino.getText()));
+                if (contaPara!=null) {
+                    if (conta.getNumeroConta() == contaPara.getNumeroConta()) {
+                        throw new MovimentacaoException("Conta de origem igual a de destino!");
+                    }
+                    conta.transferir(Double.parseDouble(tfValor.getText()), conta, contaPara);
+                    JOptionPane.showMessageDialog(null, "Transferência realizada com sucessso!");
+                } else {
+                    throw new ContaException("Conta de destino não encontrada!");
+                }
+            }
+        } catch (MovimentacaoException me) {
+            JOptionPane.showMessageDialog(null, me.getMessage());
+        } catch (ContaException ce) {
+            JOptionPane.showMessageDialog(null, ce.getMessage());
+        } catch (NumberFormatException nfe) {
+            JOptionPane.showMessageDialog(null, "Preencha os campos corretamente!");;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }//GEN-LAST:event_btnConfirmarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

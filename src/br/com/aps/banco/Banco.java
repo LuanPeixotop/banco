@@ -1,32 +1,30 @@
 package br.com.aps.banco;
 
+import Exceptions.ContaException;
 import java.util.ArrayList;
 
 public class Banco implements Imprimivel {
     private ArrayList<ContaBancaria> contas = new ArrayList<>();
     
-    public void inserir(ContaBancaria objeto) {
+    public void inserir(ContaBancaria objeto) throws ContaException {
         boolean cadastrada = false;
         for(ContaBancaria conta : contas) {
            if (objeto.getNumeroConta() == conta.getNumeroConta()) {
-               System.out.println("Conta já cadastrada!");
                cadastrada = true;
-               break;
+               throw new ContaException("Conta já cadastrada!");
            }
         }
         if (!cadastrada) {
             contas.add(objeto);
-            System.out.println("Conta cadastrada!");
         }
     }
     
-    public void remover(ContaBancaria objeto) {
+    public void remover(ContaBancaria objeto) throws ContaException {
         ContaBancaria conta = procurarConta(objeto.getNumeroConta());
         if (conta != null) {
             contas.remove(conta);
-            System.out.println("Conta removida!");
         } else {
-            System.out.println("Conta não existente no banco!");
+            throw new ContaException("Conta não existente no banco!");
         }
     }
     
