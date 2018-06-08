@@ -36,9 +36,14 @@ public class ContaCorrente extends ContaBancaria implements Imprimivel {
 
     @Override
     public void mostrarDados() {
-        System.out.println(this.getNumeroConta());
-        System.out.println(this.getSaldo());
-        System.out.println(this.getTaxaDeOperacao());
+        System.out.println("Tipo da conta: Conta Corrente");
+        System.out.println("Numero da Conta: " + this.getNumeroConta());
+        System.out.println("Saldo: " + this.getSaldo());
+        System.out.println("Taxa de operação: " + this.getTaxaDeOperacao());
+    }
+    
+    public String retornarDados() {
+        return "------------------------------------------------------------------\nTipo da conta: Conta Corrente \nNúmero da Conta: " + this.getNumeroConta() + "\nSaldo: " + this.getSaldo() + "\nTaxa de Operação: " + this.getTaxaDeOperacao() + "\n";
     }
     
     public double getTaxaDeOperacao() {

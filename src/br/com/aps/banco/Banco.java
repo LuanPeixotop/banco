@@ -39,8 +39,32 @@ public class Banco implements Imprimivel {
 
     @Override
     public void mostrarDados() {
-        contas.forEach(conta -> {
-            conta.mostrarDados();
-        });
+        Relatorio relatorio = new Relatorio();
+        for(ContaBancaria conta : contas) {
+            relatorio.gerarRelatorio((Imprimivel) conta);
+        }
+    }
+    
+    public ArrayList retornaNumeroContas() {
+        ArrayList<String> numeroContas = new ArrayList<String>();
+        if (contas != null) {
+            contas.forEach(conta -> {
+                numeroContas.add(Long.toString(conta.getNumeroConta()));
+            });
+        } 
+        return numeroContas;
+    }
+    
+    public ArrayList<ContaBancaria> retornaContas() {
+        return contas;
+    }
+
+    @Override
+    public String retornarDados() {
+        String relatorio = "";
+        for (ContaBancaria conta : contas) {
+            relatorio = relatorio + conta.retornarDados();
+        }
+        return relatorio;
     }
 }

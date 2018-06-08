@@ -36,14 +36,19 @@ public class ContaPoupanca extends ContaBancaria implements Imprimivel {
 
     @Override
     public void mostrarDados() {
-        System.out.println(this.getNumeroConta());
-        System.out.println(this.getSaldo());
+        System.out.println("Tipo da conta: Conta Poupança");
+        System.out.println("Número da conta: " + this.getNumeroConta());
+        System.out.println("Saldo: " + this.getSaldo());
         System.out.println("Limite: " + this.getLimite());
         if (this.getSaldo() < 0) {
             System.out.println("Limite Disponível: " + (this.getLimite() - this.getSaldo()));
         } else {
             System.out.println("Limite Disponível: " + this.getLimite());
         }
+    }
+    
+    public String retornarDados() {
+        return "------------------------------------------------------------------\nTipo da conta: Conta Poupança \nNúmero da Conta: " + this.getNumeroConta() + "\nSaldo: " + this.getSaldo() + "\nLimite: " + this.getLimite() + "\n";
     }
 
     public double getLimite() {

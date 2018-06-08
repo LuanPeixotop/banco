@@ -6,7 +6,6 @@
 package br.com.aps.banco.ui;
 
 import Exceptions.ContaException;
-import br.com.aps.banco.ContaBancaria;
 import br.com.aps.banco.ContaCorrente;
 import br.com.aps.banco.ContaPoupanca;
 import javax.swing.JOptionPane;
@@ -24,6 +23,13 @@ public class CriarConta extends javax.swing.JInternalFrame {
         initComponents();
         radioContas.add(radioContaCorrente);
         radioContas.add(radioContaPoupanca);
+    }
+    
+    public void limparFormulario() {
+        tfNumeroConta.setText("");
+        tfSaldo.setText("");
+        tfTaxaOuLimite.setText("");
+        tfNumeroConta.requestFocusInWindow();
     }
 
     /**
@@ -182,7 +188,7 @@ public class CriarConta extends javax.swing.JInternalFrame {
                        Double.parseDouble(tfSaldo.getText()),
                        Double.parseDouble(tfTaxaOuLimite.getText()));
                BancoUI.banco.inserir(conta);
-               JOptionPane.showMessageDialog(null, "Conta Corrente Cadastrada com sucesso!");
+               JOptionPane.showMessageDialog(rootPane, "Conta Corrente Cadastrada com sucesso!");
             }
             else if(radioContaPoupanca.isSelected()) {
                 ContaPoupanca conta = new ContaPoupanca(
@@ -190,17 +196,18 @@ public class CriarConta extends javax.swing.JInternalFrame {
                        Double.parseDouble(tfSaldo.getText()),
                        Double.parseDouble(tfTaxaOuLimite.getText()));
                BancoUI.banco.inserir(conta);
-               JOptionPane.showMessageDialog(null, "Conta Poupanca Cadastrada com sucesso!");
+               JOptionPane.showMessageDialog(rootPane, "Conta Poupanca Cadastrada com sucesso!");
             }
         } catch (NumberFormatException nfe) {
-            JOptionPane.showMessageDialog(null, "Preencha os campos corretamente!");;
+            JOptionPane.showMessageDialog(rootPane, "Preencha os campos corretamente!");;
         } 
         catch (ContaException ce) {
-            JOptionPane.showMessageDialog(null, ce.getMessage());
+            JOptionPane.showMessageDialog(rootPane, ce.getMessage());
         }
         catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Ocorreu um erro: " + e.getMessage());
+            JOptionPane.showMessageDialog(rootPane, "Ocorreu um erro: " + e.getMessage());
         }
+        limparFormulario();
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void btnFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharActionPerformed

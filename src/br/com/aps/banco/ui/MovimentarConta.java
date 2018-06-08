@@ -30,6 +30,12 @@ public class MovimentarConta extends javax.swing.JInternalFrame {
         tfNumeroContaDestino.setEnabled(false);
         
     }
+    
+    public void limparFormulario() {
+        tfNumeroContaDestino.setText("");
+        tfValor.setText("");
+        tfNumeroConta.requestFocusInWindow();
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -229,14 +235,15 @@ public class MovimentarConta extends javax.swing.JInternalFrame {
             if (conta != null) {
                 btnConfirmar.setEnabled(true);
             } else {
-                JOptionPane.showMessageDialog(null, "Conta Não Encontrada!");
+                JOptionPane.showMessageDialog(rootPane, "Conta Não Encontrada!");
+                tfNumeroConta.requestFocusInWindow();
             }
             
         } catch (NumberFormatException nfe) {
-            JOptionPane.showMessageDialog(null, "Preencha os campos corretamente!");;
+            JOptionPane.showMessageDialog(rootPane, "Preencha os campos corretamente!");;
         } 
         catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Ocorreu um erro: " + e.getMessage());
+            JOptionPane.showMessageDialog(rootPane, "Ocorreu um erro: " + e.getMessage());
         }
     }//GEN-LAST:event_btnLocalizarActionPerformed
 
@@ -244,10 +251,12 @@ public class MovimentarConta extends javax.swing.JInternalFrame {
         try {
             if (radio == 1) {
                 conta.depositar(Double.parseDouble(tfValor.getText()));
-                JOptionPane.showMessageDialog(null, "Depositado com sucesso!");
+                JOptionPane.showMessageDialog(rootPane, "Depositado com sucesso!");
+                limparFormulario();
             } else if (radio == 2) {
                 conta.sacar(Double.parseDouble(tfValor.getText()));
-                JOptionPane.showMessageDialog(null, "Sacado com sucesso!");
+                JOptionPane.showMessageDialog(rootPane, "Sacado com sucesso!");
+                limparFormulario();
             } else {
                 ContaBancaria contaPara = BancoUI.banco.procurarConta(Long.parseLong(tfNumeroContaDestino.getText()));
                 if (contaPara!=null) {
@@ -255,20 +264,21 @@ public class MovimentarConta extends javax.swing.JInternalFrame {
                         throw new MovimentacaoException("Conta de origem igual a de destino!");
                     }
                     conta.transferir(Double.parseDouble(tfValor.getText()), conta, contaPara);
-                    JOptionPane.showMessageDialog(null, "Transferência realizada com sucessso!");
+                    JOptionPane.showMessageDialog(rootPane, "Transferência realizada com sucessso!");
+                    limparFormulario();
                 } else {
                     throw new ContaException("Conta de destino não encontrada!");
                 }
             }
         } catch (MovimentacaoException me) {
-            JOptionPane.showMessageDialog(null, me.getMessage());
+            JOptionPane.showMessageDialog(rootPane, me.getMessage());
         } catch (ContaException ce) {
-            JOptionPane.showMessageDialog(null, ce.getMessage());
+            JOptionPane.showMessageDialog(rootPane, ce.getMessage());
         } catch (NumberFormatException nfe) {
-            JOptionPane.showMessageDialog(null, "Preencha os campos corretamente!");;
+            JOptionPane.showMessageDialog(rootPane, "Preencha os campos corretamente!");;
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
-        }
+            JOptionPane.showMessageDialog(rootPane, e.getMessage());
+        }   
     }//GEN-LAST:event_btnConfirmarActionPerformed
 
 

@@ -128,12 +128,17 @@ public class RemoverConta extends javax.swing.JInternalFrame {
             ContaBancaria conta = BancoUI.banco.procurarConta(Long.parseLong(tfNumeroConta.getText()));
             if (conta != null) {
                 BancoUI.banco.remover(conta);
-                JOptionPane.showMessageDialog(null, "Conta removida com sucesso!");
+                JOptionPane.showMessageDialog(rootPane, "Conta removida com sucesso!");
+                tfNumeroConta.setText("");
+                tfNumeroConta.requestFocusInWindow();
             } else {
-                JOptionPane.showMessageDialog(null, "Conta não encontrada!");
+                JOptionPane.showMessageDialog(rootPane, "Conta não encontrada!");
+                tfNumeroConta.requestFocusInWindow();
             }
+        } catch (NumberFormatException nfe) {
+            JOptionPane.showMessageDialog(rootPane, "Preencha os campos corretamente!");;
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
+            JOptionPane.showMessageDialog(rootPane, e.getMessage());
         }
     }//GEN-LAST:event_btnRemoverActionPerformed
 
